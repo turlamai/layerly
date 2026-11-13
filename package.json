@@ -1,0 +1,11 @@
+{
+  "name": "layerly",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.3.0",
+  "scripts": {
+    "dev": "pnpm --filter @layerly/desktop dev",
+    "build": "pnpm --filter @layerly/desktop build",
+    "check": "pnpm --filter @layerly/desktop check"
+  }
+}

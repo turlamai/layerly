@@ -1,0 +1,11 @@
+{
+  "name": "@layerly/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "echo \"(vitest arrives with the first UI slice)\" && exit 0"
+  }
+}
