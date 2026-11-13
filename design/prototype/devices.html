@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Layerly — 设备</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="lights"><i></i><i></i><i></i></div>
+    <span class="t">Layerly</span>
+    <span class="sp"></span>
+    <button class="iconbtn" title="设置"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1"/></svg></button>
+  </div>
+  <div class="body">
+
+    <!-- sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="mark">L</div>
+        <div class="name">layerly</div>
+      </div>
+      <div class="sect">工作台</div>
+      <nav class="nav">
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><rect x="1.5" y="1.5" width="5.4" height="5.4" rx="1.2"/><rect x="9.1" y="1.5" width="5.4" height="5.4" rx="1.2"/><rect x="1.5" y="9.1" width="5.4" height="5.4" rx="1.2"/><rect x="9.1" y="9.1" width="5.4" height="5.4" rx="1.2"/></svg>总览</div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 5.2c0-1 0-1.5.3-1.9.3-.4.8-.6 1.8-.7l1.6-.2c.7-.1 1.3-.4 1.8-.9l.4-.4c.3-.3.8-.3 1.1 0l.4.4c.5.5 1.1.8 1.8.9l1.6.2c1 .1 1.5.3 1.8.7.3.4.3.9.3 1.9V10c0 1.6 0 2.4-.5 3-.5.5-1.3.5-3 .5H5.5c-1.6 0-2.4 0-3-.5-.5-.6-.5-1.4-.5-3V5.2Z"/><path d="M2 8.5h12"/></svg>作品<span class="count num">7</span></div>
+        <div class="nav-item active"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M3 4.5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.5M3 4.5h10M3 4.5c-.6 0-1 .4-1 1V11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5.5c0-.6-.4-1-1-1M5.5 10.5h5"/></svg>设备</div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><circle cx="8" cy="8" r="2.2"/><path d="M8 2.5V1M13.5 8H15"/></svg>材料</div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5c2.3 0 4.3 1.4 5.1 3.4"/><path d="M13.5 2v3.9h-3.9"/></svg>历史</div>
+      </nav>
+      <div class="sect">AI</div>
+      <nav class="nav">
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M3 3.5h10a1.5 1.5 0 0 1 1.5 1.5v5A1.5 1.5 0 0 1 13 11.5H8l-3.2 2.4c-.4.3-1 0-1-.5v-1.9H3A1.5 1.5 0 0 1 1.5 10V5A1.5 1.5 0 0 1 3 3.5Z"/><path d="M5 6.5h6M5 8.7h3.6"/></svg>顾问</div>
+      </nav>
+      <div class="foot">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span class="dot busy"></span><span style="color:var(--ink);font-weight:600;">X1 Carbon</span>
+        </div>
+        <div>正在打印 · <span class="num">L2/184</span></div>
+      </div>
+    </aside>
+
+    <!-- main -->
+    <main class="main">
+      <div class="topbar">
+        <h1>设备</h1>
+        <span class="sub"><span class="num">1</span> 台打印机 · 已连接</span>
+        <span class="sp"></span>
+        <button class="btn"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg>添加设备</button>
+      </div>
+
+      <div class="content">
+        <div class="grid">
+
+          <!-- X1 Carbon -->
+          <div class="card">
+            <div class="card-h">
+              X1 Carbon
+              <span class="badge">LAN 直连</span>
+              <span class="sp"></span>
+              <span class="pill printing"><i></i>Printing</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 280px;gap:18px;padding:14px 16px;">
+
+              <!-- 当前任务 -->
+              <div style="display:flex;flex-direction:column;gap:10px;min-width:0;">
+                <div style="font-size:11px;font-weight:600;letter-spacing:.8px;color:var(--mute);">当前任务</div>
+                <div style="display:flex;align-items:baseline;gap:8px;">
+                  <span style="font-size:14.5px;font-weight:700;">相机快装板 V4</span>
+                  <span style="font-size:12.5px;color:var(--mute);">第 <span class="num">3/4</span> 件</span>
+                </div>
+                <div class="layerbar"><div class="fill" style="width:62%;"></div></div>
+                <div style="font-size:12.5px;color:var(--mute);"><span class="num">L114/184</span> · 剩 <span class="num">41</span> 分钟</div>
+                <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:8px;">
+                  <div class="card metric" style="padding:10px 12px;"><span class="k">喷嘴</span><span class="v">220<small>°C</small></span></div>
+                  <div class="card metric" style="padding:10px 12px;"><span class="k">热床</span><span class="v">100<small>°C</small></span></div>
+                  <div class="card metric" style="padding:10px 12px;"><span class="k">腔温</span><span class="v">45<small>°C</small></span></div>
+                  <div class="card metric" style="padding:10px 12px;"><span class="k">风扇</span><span class="v">80<small>%</small></span></div>
+                </div>
+              </div>
+
+              <!-- AMS -->
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="font-size:11px;font-weight:600;letter-spacing:.8px;color:var(--mute);">AMS</div>
+                <div class="ams-slot"><span class="n">1</span><span class="chip" style="border:none;padding:0;background:none;"><span class="sw" style="background:#2b2b2e;"></span>PETG 黑</span><span class="meta num">820g</span></div>
+                <div class="ams-slot"><span class="n">2</span><span class="chip" style="border:none;padding:0;background:none;"><span class="sw" style="background:#d8d3c8;"></span>PLA 米白</span><span class="meta num">450g</span></div>
+                <div class="ams-slot empty"><span class="n">3</span>空</div>
+                <div class="ams-slot empty"><span class="n">4</span>空</div>
+                <button class="btn small" style="align-self:flex-start;"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5c2.3 0 4.3 1.4 5.1 3.4"/><path d="M13.5 2v3.9h-3.9"/></svg>盘点 AMS</button>
+              </div>
+            </div>
+
+            <!-- 操作行 -->
+            <div style="border-top:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:6px;">
+              <button class="btn ghost small"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M5.5 3.5v9M10.5 3.5v9"/></svg>暂停</button>
+              <button class="btn ghost small" disabled><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><rect x="1.5" y="4.5" width="9" height="7" rx="1.5"/><path d="M10.5 8.2 14.5 5.5v5L10.5 8.2Z"/></svg>查看摄像头</button>
+              <span style="font-size:11px;color:var(--faint);">LAN 模式下摄像头不可用</span>
+            </div>
+          </div>
+
+          <!-- 维护 -->
+          <div class="card">
+            <div class="card-h">维护</div>
+            <div class="table">
+              <div class="trow">
+                <div class="grow">喷嘴 <span class="num">0.4</span><span class="dim"> · 已打印 <span class="num">213h</span> · 建议余量 <span class="num">1000h</span></span></div>
+              </div>
+              <div class="trow">
+                <div class="grow">PEI 板<span class="dim"> · 距保养 <span class="num">38</span> 次打印</span></div>
+              </div>
+              <div class="trow">
+                <div class="grow">AMS 干燥剂<span class="dim"> · <span class="num">2</span> 周前更换</span></div>
+              </div>
+              <div class="trow">
+                <div class="grow">固件<span class="dim"> · <span class="num">01.07.00.00</span></span></div>
+                <span class="pill done"><i></i>已是最新</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 历史连接 -->
+          <div class="card">
+            <div class="card-h">历史连接</div>
+            <div class="table">
+              <div class="trow">
+                <span class="dot off"></span>
+                <div class="grow">P1S <span class="dim">灰</span></div>
+                <span class="dim">上次连接 <span class="num">09-30</span></span>
+              </div>
+              <div class="trow">
+                <span class="dot off"></span>
+                <div class="grow">A1 mini <span class="dim">白</span></div>
+                <span class="dim">上次连接 <span class="num">08-02</span></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<button class="toggle" onclick="document.body.classList.toggle('dark')">◐ 主题</button>
+</body>
+</html>

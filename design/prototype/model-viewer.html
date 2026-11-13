@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Layerly — 模型查看器</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+/* 布局辅助：全屏画布 + 悬浮控件定位 */
+.viewer-content { overflow: hidden; padding: 14px 20px 20px; display: flex; }
+.viewer-stage { flex: 1; position: relative; overflow: hidden; }
+.viewer-stage .layers-bg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--faint); opacity: .5; }
+.stage-model { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink); }
+.stage-model svg { width: 400px; height: 400px; }
+.float { position: absolute; z-index: 2; }
+.float.tl { top: 14px; left: 16px; }
+.float.tc { top: 14px; left: 50%; transform: translateX(-50%); }
+.float.tr { top: 14px; right: 16px; }
+.float.bl { bottom: 16px; left: 16px; }
+.float.bc { bottom: 16px; left: 50%; transform: translateX(-50%); }
+.float.br { bottom: 16px; right: 16px; }
+.float-bar { display: flex; gap: 2px; padding: 3px 6px; border: 1px solid var(--line); border-radius: var(--radius-ctl); background: var(--surface); background: color-mix(in srgb, var(--surface) 88%, transparent); box-shadow: 0 2px 10px rgba(34,30,24,.10); }
+.float-card { background: var(--surface); background: color-mix(in srgb, var(--surface) 88%, transparent); box-shadow: 0 2px 10px rgba(34,30,24,.10); }
+.slice-ctl { display: flex; align-items: center; gap: 12px; width: 460px; padding: 10px 14px; }
+.slice-track { position: relative; flex: 1; display: flex; align-items: center; }
+.slice-knob { position: absolute; top: 50%; left: 62%; width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); transform: translate(-50%,-50%); box-shadow: 0 1px 4px rgba(34,30,24,.22); }
+.hint-card { display: flex; flex-direction: column; gap: 6px; max-width: 210px; padding: 10px 12px; align-items: flex-start; }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="lights"><i></i><i></i><i></i></div>
+    <span class="t">Layerly</span>
+    <span class="sp"></span>
+    <button class="iconbtn" title="设置"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1"/></svg></button>
+  </div>
+  <div class="body">
+
+    <!-- sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="mark">L</div>
+        <div class="name">layerly</div>
+      </div>
+      <div class="sect">工作台</div>
+      <nav class="nav">
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><rect x="1.5" y="1.5" width="5.4" height="5.4" rx="1.2"/><rect x="9.1" y="1.5" width="5.4" height="5.4" rx="1.2"/><rect x="1.5" y="9.1" width="5.4" height="5.4" rx="1.2"/><rect x="9.1" y="9.1" width="5.4" height="5.4" rx="1.2"/></svg>总览</div>
+        <div class="nav-item active"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 5.2c0-1 0-1.5.3-1.9.3-.4.8-.6 1.8-.7l1.6-.2c.7-.1 1.3-.4 1.8-.9l.4-.4c.3-.3.8-.3 1.1 0l.4.4c.5.5 1.1.8 1.8.9l1.6.2c1 .1 1.5.3 1.8.7.3.4.3.9.3 1.9V10c0 1.6 0 2.4-.5 3-.5.5-1.3.5-3 .5H5.5c-1.6 0-2.4 0-3-.5-.5-.6-.5-1.4-.5-3V5.2Z"/><path d="M2 8.5h12"/></svg>作品<span class="count num">7</span></div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M3 4.5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.5M3 4.5h10M3 4.5c-.6 0-1 .4-1 1V11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5.5c0-.6-.4-1-1-1M5.5 10.5h5"/></svg>设备</div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><circle cx="8" cy="8" r="2.2"/><path d="M8 2.5V1M13.5 8H15"/></svg>材料</div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5c2.3 0 4.3 1.4 5.1 3.4"/><path d="M13.5 2v3.9h-3.9"/></svg>历史</div>
+      </nav>
+      <div class="sect">AI</div>
+      <nav class="nav">
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M3 3.5h10a1.5 1.5 0 0 1 1.5 1.5v5A1.5 1.5 0 0 1 13 11.5H8l-3.2 2.4c-.4.3-1 0-1-.5v-1.9H3A1.5 1.5 0 0 1 1.5 10V5A1.5 1.5 0 0 1 3 3.5Z"/><path d="M5 6.5h6M5 8.7h3.6"/></svg>顾问</div>
+      </nav>
+      <div class="foot">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span class="dot busy"></span><span style="color:var(--ink);font-weight:600;">X1 Carbon</span>
+        </div>
+        <div>正在打印 · <span class="num">L2/184</span></div>
+      </div>
+    </aside>
+
+    <!-- main：全屏画布，控件悬浮压在画布上 -->
+    <main class="main">
+      <div class="content viewer-content">
+        <div class="card viewer-stage">
+
+          <!-- 画布背景：层积波纹 -->
+          <svg class="layers-bg" viewBox="0 0 200 110" preserveAspectRatio="none"><g stroke="currentColor" stroke-width="1" fill="none" opacity=".35"><path vector-effect="non-scaling-stroke" d="M-10 96 Q50 80 100 92 T210 88"/><path vector-effect="non-scaling-stroke" d="M-10 78 Q58 62 108 76 T210 70"/><path vector-effect="non-scaling-stroke" d="M-10 60 Q54 44 104 58 T210 52"/><path vector-effect="non-scaling-stroke" d="M-10 42 Q50 28 100 40 T210 34"/><path vector-effect="non-scaling-stroke" d="M-10 24 Q56 12 102 22 T210 18"/></g></svg>
+
+          <!-- 居中等距线框：相机快装板（螺口 + 卡扣） -->
+          <div class="stage-model">
+            <svg viewBox="0 0 420 420" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+              <!-- 不可见棱（弱化） -->
+              <g opacity=".28">
+                <path d="M210 212 L210 230"/>
+                <path d="M210 230 L400.5 340"/>
+                <path d="M210 230 L88.8 300"/>
+              </g>
+              <!-- 板体三面 -->
+              <path d="M210 212 L400.5 322 L279.3 392 L88.8 282 Z"/>
+              <path d="M400.5 322 L279.3 392 L279.3 410 L400.5 340 Z"/>
+              <path d="M279.3 392 L88.8 282 L88.8 300 L279.3 410 Z"/>
+              <!-- 侧面打印层纹 -->
+              <g opacity=".3" stroke-width="1.2">
+                <path d="M400.5 334 L279.3 404"/>
+                <path d="M400.5 328 L279.3 398"/>
+                <path d="M279.3 404 L88.8 294"/>
+                <path d="M279.3 398 L88.8 288"/>
+              </g>
+              <!-- 螺口孔 ×2 -->
+              <g opacity=".8" stroke-width="1.4">
+                <ellipse cx="210" cy="242" rx="7.4" ry="4.3"/>
+                <ellipse cx="348.6" cy="322" rx="7.4" ry="4.3"/>
+              </g>
+              <!-- 中央螺口凸台 + 1/4" 孔 -->
+              <ellipse cx="270.6" cy="273" rx="24.5" ry="14.1"/>
+              <ellipse cx="270.6" cy="273" rx="8.6" ry="5"/>
+              <g opacity=".55" stroke-width="1.4">
+                <path d="M246.1 273 L246.1 287"/>
+                <path d="M295.1 273 L295.1 287"/>
+                <path d="M246.1 287 A24.5 14.1 0 0 0 295.1 287"/>
+              </g>
+              <!-- 龙门轨（快装卡扣槽） -->
+              <path d="M135.5 243 L308.7 343 L274.1 363 L100.9 263 Z"/>
+              <path d="M308.7 343 L274.1 363 L274.1 385 L308.7 365 Z"/>
+              <path d="M274.1 363 L100.9 263 L100.9 285 L274.1 385 Z"/>
+              <!-- 锁紧卡扣 -->
+              <path d="M282.7 312 L308.7 327 L274.1 347 L248.1 332 Z"/>
+              <path d="M308.7 327 L274.1 347 L274.1 363 L308.7 343 Z"/>
+              <path d="M274.1 347 L248.1 332 L248.1 350 L274.1 363 Z"/>
+            </svg>
+          </div>
+
+          <!-- 左上：返回 -->
+          <div class="float tl">
+            <button class="btn ghost small">← 相机快装板 V4</button>
+          </div>
+
+          <!-- 顶中：版本 pill -->
+          <div class="float tc">
+            <span class="pill printing"><i></i>V4 · 当前版本</span>
+          </div>
+
+          <!-- 右上：视图工具 -->
+          <div class="float tr">
+            <div class="float-bar">
+              <button class="iconbtn" title="线框 / 实体"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5 14 4.7v6.6L8 14.5 2 11.3V4.7L8 1.5Z"/><path d="M2 4.7l6 3.1 6-3.1M8 7.8v6.7"/></svg></button>
+              <button class="iconbtn" title="剖层"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11l6 3 6-3"/><path d="M2 7.5l6 3 6-3"/><path d="M2 4l6 3 6-3"/></svg></button>
+              <button class="iconbtn" title="复位视角"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5c2.3 0 4.3 1.4 5.1 3.4"/><path d="M13.5 2v3.9h-3.9"/></svg></button>
+            </div>
+          </div>
+
+          <!-- 左下：尺寸摘要 -->
+          <div class="float bl">
+            <div class="card pad float-card" style="padding:10px 12px;display:flex;flex-direction:column;gap:3px;">
+              <span class="num" style="font-size:12px;font-weight:600;">64 × 42 × 9 mm</span>
+              <span class="num" style="font-size:11px;color:var(--mute);">体积 14.2 cm³ · 42 g</span>
+            </div>
+          </div>
+
+          <!-- 底中：剖层控件 -->
+          <div class="float bc">
+            <div class="card pad float-card slice-ctl">
+              <div class="slice-track">
+                <div class="layerbar" style="flex:1;"><div class="fill" style="width:62%;"></div></div>
+                <span class="slice-knob"></span>
+              </div>
+              <span class="num" style="font-size:12px;">L 114 / 184</span>
+              <button class="btn ghost small"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3.5v9l7.5-4.5L5 3.5Z"/></svg>播放层积</button>
+            </div>
+          </div>
+
+          <!-- 右下：AI 建模占位 -->
+          <div class="float br">
+            <div class="card pad float-card hint-card">
+              <span class="badge v2">AI 建模 V2</span>
+              <span style="font-size:11px;color:var(--mute);line-height:1.5;">描述需求 → 选形 → 三视图 → Text-to-CAD 将在此接入</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<button class="toggle" onclick="document.body.classList.toggle('dark')">◐ 主题</button>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Layerly — 首启引导</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* onboarding 本屏布局样式（色值一律引 shared.css 变量，亮暗成对） */
+  .ob-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 32px; }
+  .ob-card { width: 640px; padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+  .ob-head { display: flex; flex-direction: column; gap: 8px; }
+  .ob-sub { font-size: 13px; color: var(--mute); }
+
+  .steps { display: flex; align-items: center; gap: 10px; }
+  .step { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+  .step.cur { background: var(--accent); color: #fff; }
+  .dark .step.cur { color: #20150a; }
+  .step.todo { background: var(--raised); color: var(--mute); }
+  .step.last { background: var(--surface); border: 1px solid var(--line); color: var(--faint); }
+  .step-bar { width: 26px; height: 2px; border-radius: 2px; background: var(--line); }
+  .steps-label { margin-left: auto; font-size: 12px; color: var(--mute); }
+
+  .ob-step-body { display: flex; flex-direction: column; gap: 10px; }
+  .ob-title { font-size: 18px; font-weight: 700; letter-spacing: .1px; }
+  .ob-desc { font-size: 12.5px; color: var(--mute); line-height: 1.5; }
+  .trow.selected { background: var(--accent-soft); }
+  .trow.selected:hover { background: var(--accent-soft); }
+  .badge-on { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; letter-spacing: .3px; background: var(--accent); color: #fff; }
+  .dark .badge-on { color: #20150a; }
+  .lan-ok { color: var(--teal); }
+  .ob-foot-row { display: flex; align-items: center; }
+  .ob-note { font-size: 12px; color: var(--faint); }
+  .spin { animation: spin 2.4s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="lights"><i></i><i></i><i></i></div>
+    <span class="t">Layerly — 首次设置</span>
+    <span class="sp"></span>
+    <button class="iconbtn" title="设置"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1"/></svg></button>
+  </div>
+  <div class="body">
+
+    <!-- 首启引导：无 sidebar，居中卡片流 -->
+    <div class="ob-wrap">
+      <div class="card ob-card">
+
+        <!-- 顶部 brand + 副标题 -->
+        <div class="ob-head">
+          <div class="brand" style="padding:0;">
+            <div class="mark">L</div>
+            <div class="name" style="font-size:18px;">layerly</div>
+          </div>
+          <div class="ob-sub">从想法到拿得起来的东西 · 本机优先 · 无账号</div>
+        </div>
+
+        <!-- 步骤指示 -->
+        <div class="steps">
+          <span class="step cur"><span class="num">1</span></span>
+          <span class="step-bar"></span>
+          <span class="step todo"><span class="num">2</span></span>
+          <span class="step-bar"></span>
+          <span class="step todo"><span class="num">3</span></span>
+          <span class="step-bar"></span>
+          <span class="step last"><span class="num">4</span></span>
+          <span class="steps-label num">步骤 1/4</span>
+        </div>
+
+        <!-- 当前步骤：连接打印机 -->
+        <div class="ob-step-body">
+          <div class="ob-title">连接打印机</div>
+          <div class="ob-desc">Layerly 在局域网内搜索拓竹打印机；设备信息只留在本机。</div>
+
+          <div class="card table" style="overflow:hidden;">
+            <div class="trow selected">
+              <span class="dot on"></span>
+              <div class="grow" style="display:flex;align-items:baseline;gap:8px;">
+                <span style="font-weight:600;">X1 Carbon</span>
+                <span class="dim num">192.168.1.34</span>
+                <span class="dim">· <span class="lan-ok">LAN 直连可用</span></span>
+              </div>
+              <span class="badge-on">已选</span>
+            </div>
+            <div class="trow">
+              <span class="dot off"></span>
+              <div class="grow" style="display:flex;align-items:baseline;gap:8px;">
+                <span style="font-weight:600;">P1S</span>
+                <span class="dim num">192.168.1.51</span>
+              </div>
+              <button class="btn ghost small">绑定访问码</button>
+            </div>
+          </div>
+
+          <div>
+            <button class="btn ghost small"><svg class="spin" viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5c2.3 0 4.3 1.4 5.1 3.4"/><path d="M13.5 2v3.9h-3.9"/></svg>重新搜索</button>
+          </div>
+        </div>
+
+        <!-- 底部行 -->
+        <hr class="divider" style="margin:0;">
+        <div class="ob-foot-row">
+          <button class="btn ghost small">跳过，先逛逛</button>
+          <span style="flex:1;"></span>
+          <button class="btn primary">下一步：配置 AI</button>
+        </div>
+      </div>
+
+      <!-- 卡片外底部 -->
+      <div class="ob-note">随时可在设置里改 · <span class="num">12-04</span> 前无需联网</div>
+    </div>
+  </div>
+</div>
+<button class="toggle" onclick="document.body.classList.toggle('dark')">◐ 主题</button>
+</body>
+</html>

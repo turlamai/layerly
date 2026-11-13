@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Layerly — 顾问</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+/* 布局辅助：main 内全高两列（对话流 1fr / 上下文 320px） */
+.adv-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 320px; gap: 14px; padding: 0 20px 20px; }
+.chat-col { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.chat-scroll { flex: 1; overflow-y: auto; padding: 18px 20px; }
+.composer-wrap { flex: none; border-top: 1px solid var(--line); padding: 12px 16px; }
+.ctx-col { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.ctx-scroll { flex: 1; overflow-y: auto; padding: 6px 16px 12px; display: flex; flex-direction: column; gap: 9px; }
+.ctx-foot { flex: none; border-top: 1px solid var(--line); padding: 9px 16px; }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="lights"><i></i><i></i><i></i></div>
+    <span class="t">Layerly</span>
+    <span class="sp"></span>
+    <button class="iconbtn" title="设置"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1"/></svg></button>
+  </div>
+  <div class="body">
+
+    <!-- sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="mark">L</div>
+        <div class="name">layerly</div>
+      </div>
+      <div class="sect">工作台</div>
+      <nav class="nav">
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><rect x="1.5" y="1.5" width="5.4" height="5.4" rx="1.2"/><rect x="9.1" y="1.5" width="5.4" height="5.4" rx="1.2"/><rect x="1.5" y="9.1" width="5.4" height="5.4" rx="1.2"/><rect x="9.1" y="9.1" width="5.4" height="5.4" rx="1.2"/></svg>总览</div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 5.2c0-1 0-1.5.3-1.9.3-.4.8-.6 1.8-.7l1.6-.2c.7-.1 1.3-.4 1.8-.9l.4-.4c.3-.3.8-.3 1.1 0l.4.4c.5.5 1.1.8 1.8.9l1.6.2c1 .1 1.5.3 1.8.7.3.4.3.9.3 1.9V10c0 1.6 0 2.4-.5 3-.5.5-1.3.5-3 .5H5.5c-1.6 0-2.4 0-3-.5-.5-.6-.5-1.4-.5-3V5.2Z"/><path d="M2 8.5h12"/></svg>作品<span class="count num">7</span></div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M3 4.5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.5M3 4.5h10M3 4.5c-.6 0-1 .4-1 1V11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5.5c0-.6-.4-1-1-1M5.5 10.5h5"/></svg>设备</div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><circle cx="8" cy="8" r="2.2"/><path d="M8 2.5V1M13.5 8H15"/></svg>材料</div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5c2.3 0 4.3 1.4 5.1 3.4"/><path d="M13.5 2v3.9h-3.9"/></svg>历史</div>
+      </nav>
+      <div class="sect">AI</div>
+      <nav class="nav">
+        <div class="nav-item active"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M3 3.5h10a1.5 1.5 0 0 1 1.5 1.5v5A1.5 1.5 0 0 1 13 11.5H8l-3.2 2.4c-.4.3-1 0-1-.5v-1.9H3A1.5 1.5 0 0 1 1.5 10V5A1.5 1.5 0 0 1 3 3.5Z"/><path d="M5 6.5h6M5 8.7h3.6"/></svg>顾问</div>
+      </nav>
+      <div class="foot">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span class="dot busy"></span><span style="color:var(--ink);font-weight:600;">X1 Carbon</span>
+        </div>
+        <div>正在打印 · <span class="num">L2/184</span></div>
+      </div>
+    </aside>
+
+    <!-- main -->
+    <main class="main">
+      <div class="topbar">
+        <h1>顾问</h1>
+        <span class="badge">Sarah</span>
+        <span class="sub">跨项目对话 · 了解你的设备与耗材</span>
+        <span class="sp"></span>
+        <button class="btn ghost small">新对话</button>
+      </div>
+
+      <div class="adv-grid">
+
+        <!-- left：对话流 -->
+        <section class="card chat-col">
+          <div class="chat chat-scroll">
+
+            <div class="msg user">
+              <div class="who">你</div>
+              <div class="bubble">X1 最近打 PETG 总有点拉丝，是温度问题还是料受潮了？</div>
+            </div>
+
+            <div class="msg ai">
+              <div class="who"><span class="tag ai">Advisor</span>Sarah</div>
+              <div class="bubble">对照你的打印记录，最近 <span class="num">3</span> 次拉丝都出现在同一类行程上——大概率是回抽不足，不是受潮。建议：回抽行程 <span class="num">+0.2mm</span>（<span class="num">0.8 → 1.0mm</span>），并把腔温升到 <span class="num">50°C</span> 再开始打印。<br>另外提醒：AMS 槽位 3 的 PLA 橙已开封 <span class="num">90</span> 天，确有受潮风险，但这次拉丝的主因是回抽。
+                <div class="ctx-src"><span class="ref">历史 · <span class="num">3</span> 次拉丝记录</span><span class="ref">AMS 槽位 <span class="num">3</span></span><span class="ref">维护页</span></div>
+              </div>
+            </div>
+
+            <div class="msg user">
+              <div class="who">你</div>
+              <div class="bubble">PLA 橙还能用吗？</div>
+            </div>
+
+            <div class="msg ai">
+              <div class="who"><span class="tag ai">Advisor</span>Sarah</div>
+              <div class="bubble">还能用，但要分打什么。受潮的 PLA 容易出水纹和气孔——外观件不建议再用它；打结构件、夹具这类非外观件没问题。两条路：烘干 <span class="num">4h</span>（<span class="num">55°C</span>）后继续用，或者直接降级，专打非外观件。
+                <div class="ctx-src"><span class="ref">材料库</span><span class="ref">AMS 槽位 <span class="num">3</span></span></div>
+              </div>
+            </div>
+
+            <div class="confirm-card">
+              <div class="cc-title"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M8 1.5 14 4v4c0 3.4-2.4 5.9-6 6.5-3.6-.6-6-3.1-6-6.5V4l6-2.5Z"/></svg>待你确认</div>
+              <div class="cc-body">把 PLA 橙标记为『降级 · 非外观件专用』</div>
+              <div class="cc-impact">材料库 1 处修改 · 可撤销</div>
+              <div class="cc-actions">
+                <button class="btn primary small">标记</button>
+                <button class="btn ghost small">忽略</button>
+              </div>
+            </div>
+
+            <div class="msg user">
+              <div class="who">你</div>
+              <div class="bubble">顺便看下快装板批次还差什么</div>
+            </div>
+
+            <div class="msg ai">
+              <div class="who"><span class="tag ai">Advisor</span>Sarah</div>
+              <div class="bubble">快装板这批还差最后 1 件：第 <span class="num">4</span> 件已在 X1 Carbon 排队，等当前任务跑完就开打。材料方面，打完全批 PETG 黑预计还剩 <span class="num">644g</span>。补货建议（购物清单加 1 卷 PETG 黑）我之前已经给过，还在等你确认。
+                <div class="ctx-src"><span class="ref">快装板 V4</span><span class="ref">打印包</span></div>
+              </div>
+            </div>
+
+          </div>
+          <div class="composer-wrap">
+            <div class="composer">
+              <textarea>那把喷嘴余量也记到维护里</textarea>
+              <div class="row">
+                <button class="btn ghost small">@ 引用作品</button>
+                <span class="hint">AI 只提议，执行由你确认</span>
+                <span style="flex:1;"></span>
+                <button class="btn primary small">发送</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- right：上下文栏 -->
+        <aside class="card ctx-col">
+          <div class="card-h">对话上下文<span class="sp"></span><span class="badge">跨项目</span></div>
+          <div class="ctx-scroll">
+
+            <div class="sect" style="padding:2px 2px 4px;">正在引用</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span class="chip">快装板 V4<span class="pill printing" style="height:16px;padding:0 6px;font-size:10px;"><i></i>Printing</span></span>
+              <span class="chip">AMS 槽位</span>
+              <span class="chip">维护记录</span>
+            </div>
+
+            <div class="sect" style="padding:8px 2px 2px;">设备摘要</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;align-items:center;gap:7px;font-size:12.5px;">
+                <span class="dot on"></span><span style="font-weight:600;">X1 Carbon</span>
+                <span style="font-size:12px;color:var(--mute);">LAN 直连</span>
+              </div>
+              <div class="num" style="font-size:11.5px;color:var(--mute);">喷嘴 213h / PEI 38 次打印</div>
+            </div>
+
+            <div class="sect" style="padding:8px 2px 2px;">你告诉过 Sarah</div>
+            <div style="display:flex;flex-direction:column;gap:7px;">
+              <div style="font-size:11.5px;color:var(--mute);line-height:1.5;">「外观件只用 PETG 或新的 PLA」</div>
+              <div style="font-size:11.5px;color:var(--mute);line-height:1.5;">「周六通常长时间打印」</div>
+            </div>
+
+          </div>
+          <div class="ctx-foot" style="font-size:11px;color:var(--faint);">Sarah 的记忆只存在本机，可随时清除</div>
+        </aside>
+
+      </div>
+    </main>
+  </div>
+</div>
+<button class="toggle" onclick="document.body.classList.toggle('dark')">◐ 主题</button>
+<script>document.querySelector('.chat-scroll').scrollTop = 99999;</script>
+</body>
+</html>

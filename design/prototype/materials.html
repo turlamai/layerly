@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Layerly — 材料</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="lights"><i></i><i></i><i></i></div>
+    <span class="t">Layerly</span>
+    <span class="sp"></span>
+    <button class="iconbtn" title="设置"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1"/></svg></button>
+  </div>
+  <div class="body">
+
+    <!-- sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="mark">L</div>
+        <div class="name">layerly</div>
+      </div>
+      <div class="sect">工作台</div>
+      <nav class="nav">
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><rect x="1.5" y="1.5" width="5.4" height="5.4" rx="1.2"/><rect x="9.1" y="1.5" width="5.4" height="5.4" rx="1.2"/><rect x="1.5" y="9.1" width="5.4" height="5.4" rx="1.2"/><rect x="9.1" y="9.1" width="5.4" height="5.4" rx="1.2"/></svg>总览</div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M2 5.2c0-1 0-1.5.3-1.9.3-.4.8-.6 1.8-.7l1.6-.2c.7-.1 1.3-.4 1.8-.9l.4-.4c.3-.3.8-.3 1.1 0l.4.4c.5.5 1.1.8 1.8.9l1.6.2c1 .1 1.5.3 1.8.7.3.4.3.9.3 1.9V10c0 1.6 0 2.4-.5 3-.5.5-1.3.5-3 .5H5.5c-1.6 0-2.4 0-3-.5-.5-.6-.5-1.4-.5-3V5.2Z"/><path d="M2 8.5h12"/></svg>作品<span class="count num">7</span></div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M3 4.5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.5M3 4.5h10M3 4.5c-.6 0-1 .4-1 1V11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5.5c0-.6-.4-1-1-1M5.5 10.5h5"/></svg>设备</div>
+        <div class="nav-item active"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><circle cx="8" cy="8" r="2.2"/><path d="M8 2.5V1M13.5 8H15"/></svg>材料</div>
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5c2.3 0 4.3 1.4 5.1 3.4"/><path d="M13.5 2v3.9h-3.9"/></svg>历史</div>
+      </nav>
+      <div class="sect">AI</div>
+      <nav class="nav">
+        <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M3 3.5h10a1.5 1.5 0 0 1 1.5 1.5v5A1.5 1.5 0 0 1 13 11.5H8l-3.2 2.4c-.4.3-1 0-1-.5v-1.9H3A1.5 1.5 0 0 1 1.5 10V5A1.5 1.5 0 0 1 3 3.5Z"/><path d="M5 6.5h6M5 8.7h3.6"/></svg>顾问</div>
+      </nav>
+      <div class="foot">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+          <span class="dot busy"></span><span style="color:var(--ink);font-weight:600;">X1 Carbon</span>
+        </div>
+        <div>正在打印 · <span class="num">L2/184</span></div>
+      </div>
+    </aside>
+
+    <!-- main -->
+    <main class="main">
+      <div class="topbar">
+        <h1>材料</h1>
+        <span class="sub"><span class="num">7</span> 种耗材 · 库存 <span class="num">2.9 kg</span></span>
+        <span class="sp"></span>
+        <button class="btn primary"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg>登记新耗材</button>
+      </div>
+
+      <div class="content">
+        <div class="grid">
+
+          <!-- 过滤 -->
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="chip" style="border-color:var(--accent);background:var(--accent-soft);color:var(--accent-hover);font-weight:600;">全部</span>
+            <span class="chip">PLA</span>
+            <span class="chip">PETG</span>
+            <span class="chip">ABS</span>
+            <span class="chip">待补</span>
+          </div>
+
+          <!-- 库存 -->
+          <div class="grid" style="grid-template-columns:repeat(3,1fr);">
+
+            <!-- PETG 黑（正在用） -->
+            <div class="card pad" style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:11px;">
+                <div style="width:44px;height:44px;border-radius:var(--radius-card);background:#2b2b2e;border:1px solid rgba(0,0,0,.15);flex:none;"></div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:13.5px;font-weight:700;">PETG 黑 · Bambu</div>
+                  <div class="num" style="font-size:15px;font-weight:700;">820 g <span style="font-size:11.5px;font-weight:400;color:var(--faint);">/ 1 kg</span></div>
+                </div>
+              </div>
+              <div class="layerbar"><div class="fill" style="width:82%;"></div></div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <span class="chip">槽位 <span class="num">1</span></span>
+                <span class="chip">开封 <span class="num">10-12</span></span>
+                <span style="flex:1;"></span>
+                <span class="badge" style="background:var(--accent-soft);color:var(--accent-hover);">正在用</span>
+              </div>
+            </div>
+
+            <!-- PLA 米白 -->
+            <div class="card pad" style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:11px;">
+                <div style="width:44px;height:44px;border-radius:var(--radius-card);background:#d8d3c8;border:1px solid rgba(0,0,0,.15);flex:none;"></div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:13.5px;font-weight:700;">PLA 米白 · Bambu</div>
+                  <div class="num" style="font-size:15px;font-weight:700;">450 g <span style="font-size:11.5px;font-weight:400;color:var(--faint);">/ 1 kg</span></div>
+                </div>
+              </div>
+              <div class="layerbar"><div class="fill" style="width:45%;"></div></div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <span class="chip">槽位 <span class="num">2</span></span>
+                <span class="chip">开封 <span class="num">10-05</span></span>
+              </div>
+            </div>
+
+            <!-- PLA 橙（受潮风险） -->
+            <div class="card pad" style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:11px;">
+                <div style="width:44px;height:44px;border-radius:var(--radius-card);background:#c96f1f;border:1px solid rgba(0,0,0,.15);flex:none;"></div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:13.5px;font-weight:700;">PLA 橙 · 第三方</div>
+                  <div class="num" style="font-size:15px;font-weight:700;">120 g <span style="font-size:11.5px;font-weight:400;color:var(--faint);">/ 1 kg</span></div>
+                </div>
+              </div>
+              <div class="layerbar"><div class="fill" style="width:12%;background-color:var(--warn);"></div></div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <span class="chip">外置</span>
+                <span class="chip">开封 <span class="num">08-15</span></span>
+                <span style="flex:1;"></span>
+                <span class="badge" style="background:var(--warn-soft);color:var(--warn);">受潮风险 · 已开封 <span class="num">90</span> 天</span>
+              </div>
+            </div>
+
+            <!-- PETG 灰 -->
+            <div class="card pad" style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:11px;">
+                <div style="width:44px;height:44px;border-radius:var(--radius-card);background:#8a8d91;border:1px solid rgba(0,0,0,.15);flex:none;"></div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:13.5px;font-weight:700;">PETG 灰 · Bambu</div>
+                  <div class="num" style="font-size:15px;font-weight:700;">1.2 kg <span style="font-size:11.5px;font-weight:400;color:var(--faint);">/ 1.5 kg</span></div>
+                </div>
+              </div>
+              <div class="layerbar"><div class="fill" style="width:80%;"></div></div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <span class="chip">未开封</span>
+              </div>
+            </div>
+
+            <!-- PLA 透明 -->
+            <div class="card pad" style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:11px;">
+                <div style="width:44px;height:44px;border-radius:var(--radius-card);background:#e3e6e8;border:1px solid rgba(0,0,0,.15);flex:none;"></div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:13.5px;font-weight:700;">PLA 透明 · 第三方</div>
+                  <div class="num" style="font-size:15px;font-weight:700;">350 g <span style="font-size:11.5px;font-weight:400;color:var(--faint);">/ 1 kg</span></div>
+                </div>
+              </div>
+              <div class="layerbar"><div class="fill" style="width:35%;"></div></div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <span class="chip">外置</span>
+                <span class="chip">开封 <span class="num">09-20</span></span>
+              </div>
+            </div>
+
+            <!-- 空槽：登记第三方料卷 -->
+            <div class="card pad" style="border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--mute);text-align:center;cursor:pointer;">
+              <svg viewBox="0 0 16 16" fill="none" stroke-width="1.5" style="width:20px;height:20px;stroke:var(--faint);"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v6M5 8h6"/></svg>
+              <div style="font-size:12.5px;">登记手上的第三方的料卷</div>
+            </div>
+          </div>
+
+          <!-- 清单与记录 -->
+          <div class="grid" style="grid-template-columns:1fr 1fr;align-items:start;">
+
+            <!-- 购物清单 -->
+            <div class="card">
+              <div class="card-h">购物清单<span class="sp"></span><span class="badge num">3</span></div>
+              <div class="table">
+                <div class="trow">
+                  <div class="grow">PETG 黑 · <span class="num">1</span> 卷 <span class="dim">· 来源：顾问建议</span> <span class="badge v2">AI</span></div>
+                  <span class="dim num">¥89</span>
+                  <button class="btn ghost small">移除</button>
+                </div>
+                <div class="trow">
+                  <div class="grow">AMS 干燥剂 · <span class="num">×2</span></div>
+                  <span class="dim num">¥35</span>
+                  <button class="btn ghost small">移除</button>
+                </div>
+                <div class="trow">
+                  <div class="grow">P1S 备用喷嘴</div>
+                  <span class="dim num">¥49</span>
+                  <button class="btn ghost small">移除</button>
+                </div>
+              </div>
+              <div style="border-top:1px solid var(--line);padding:10px 16px;font-size:11.5px;color:var(--mute);">清单不会自动下单，下单由你完成</div>
+            </div>
+
+            <!-- 采购记录 -->
+            <div class="card">
+              <div class="card-h">采购记录</div>
+              <div class="table">
+                <div class="trow">
+                  <span class="dim num">10-28</span>
+                  <div class="grow">PETG 黑 · <span class="num">×2</span></div>
+                  <span class="pill done"><i></i>已到货</span>
+                </div>
+                <div class="trow">
+                  <span class="dim num">10-05</span>
+                  <div class="grow">PEI 清洁剂</div>
+                  <span class="pill done"><i></i>已到货</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<button class="toggle" onclick="document.body.classList.toggle('dark')">◐ 主题</button>
+</body>
+</html>
