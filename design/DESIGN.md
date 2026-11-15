@@ -87,3 +87,17 @@
 **HIG 清单**：五原则逐条过（状态可读 / 内容主角 / 直接操纵 / 反馈及时 / 防错一致）。
 
 **用户满意**：用户在 OpenDesign 打磨后明确说「收」。
+
+
+## 2026-11-15 · 原型交互补齐
+
+入口为 prototype/dashboard.html。侧栏连接作品、设备、材料、历史、顾问。新建作品先呈现无模型空态，禁止直接打印；已有示例作品经过准备与确认后仅加入本地演示队列。模型层数与视角为 SVG 示意交互，不执行真实切片。
+
+根级 index.html 只负责首次进入主界面；页面切换直接到目标界面，不再保留页面目录。原型运行脚本 prototype-runtime.js / prototype-flow.js 只表达浏览器内的交互合同；正式产品业务仍由既定引擎实现。真实设备、模型和发布服务均未连接。凭据演示不保存密钥，破坏性示例与派发保留确认和取消。
+
+这些是可评审的增量改动，未替用户勾选满意度、HIG 最终验收或设计冻结条件。
+
+
+## Prototype source checkpoint — 2026-11-15
+
+`index.html` opens the primary prototype directly. Screen-directory launchers have been removed. All local scripts, styles and referenced assets needed by this checkpoint are versioned under this directory; OpenDesign metadata is excluded. This is an editable prototype checkpoint, not a claim that the native product or external services implement these interactions.

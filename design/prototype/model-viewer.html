@@ -25,6 +25,7 @@
 .slice-knob { position: absolute; top: 50%; left: 62%; width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); transform: translate(-50%,-50%); box-shadow: 0 1px 4px rgba(34,30,24,.22); }
 .hint-card { display: flex; flex-direction: column; gap: 6px; max-width: 210px; padding: 10px 12px; align-items: flex-start; }
 </style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
 <div class="window">
@@ -167,5 +168,7 @@
   </div>
 </div>
 <button class="toggle" onclick="document.body.classList.toggle('dark')">◐ 主题</button>
+<script src="prototype-runtime.js"></script>
+<script src="prototype-flow.js"></script>
 </body>
 </html>
