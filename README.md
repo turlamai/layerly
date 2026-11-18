@@ -1,48 +1,48 @@
 # Layerly
 
-> AI-native 3D printing workbench — from idea to object.
+**From idea to object — a local-first 3D printing workbench.**
 
-Layerly is a desktop workbench for personal 3D printing: it keeps the
-whole life of an object in one place — the brief, the design versions,
-the model, the slice plans, the material it was printed in, the print
-records and the photos of the finished part — and puts an AI advisor
-next to that library. The advisor knows your printer, your filaments
-and your past prints; it explains, compares and drafts, while every
-action that matters (dispatching a print, buying filament, deleting an
-archive) stays an explicit decision of yours.
+**English** · [简体中文](README.zh-CN.md)
 
-Everything runs locally on your machine. Printer access is LAN-only;
-no cloud account is required for core flows.
+[Product homepage](https://jrtx.site/products/layerly/) · [Source](https://github.com/turlamai/layerly) · [Issues and feedback](https://github.com/turlamai/layerly/issues)
 
-## Status
+> **Development preview — skeleton stage.** This is a design/architecture implementation, not a released consumer app. There is no verified installer, paid edition, checkout or trial expiry.
 
-Skeleton stage. The design baseline (`design/DESIGN.md` +
-`design/prototype/`) precedes implementation, per the family's
-prototype-first flow.
+## The workflow
 
-## Requirements
+Layerly aims to keep a printed object's lifecycle together: the brief, design iterations, 3D model, slicer plan, filament/materials, print attempts and finished photos. A BYOK AI advisor may explain and draft, but sending a print, buying materials and deleting content require an explicit human decision.
 
-- Racket (with the `glaze` package) and a native system WebView
-  - macOS: WKWebView (built in)
-  - Windows: WebView2
-  - Linux: WebKitGTK
-- Node.js 22+ and pnpm
+The core workflow is local. Printer access is intended over the LAN without a required cloud account. **These are design goals, not proof that all integration paths work today.**
 
-## Development
+## Platforms and status
+
+Target platforms are macOS, Windows and Linux using [Glaze](https://github.com/turlamai/glaze), a Racket backend and a native system WebView. Current work starts at [design/DESIGN.md](design/DESIGN.md) and [design/prototype](design/prototype/).
+
+No published installer has completed packaged acceptance. Do not use the present skeleton to control a production printer unattended.
+
+## Developer quick start
+
+Prerequisites: Racket and the `glaze` package; Node.js 22+ and pnpm; WKWebView (macOS), WebView2 (Windows) or WebKitGTK (Linux).
 
 ```sh
 pnpm install
-pnpm build          # build the frontend into apps/desktop/dist
-raco glaze dev      # run the native app
+pnpm build          # frontend -> apps/desktop/dist
+raco glaze dev      # developer host
 raco test backend/  # backend unit tests
 raco glaze schema check --json
 pnpm check          # frontend type check
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for ground rules, and
-[README.zh-CN.md](README.zh-CN.md) for the full Chinese readme.
+Commands are developer workflows and do **not** establish production package readiness.
+
+## Data, privacy and recovery
+
+Core records are intended to stay on the local computer. Critical actions require confirmation. Persistent formats, backups, migrations and reliable recovery must be tested before product release; do not trust a prototype with irreplaceable work.
+
+## Feedback
+
+File an [issue](https://github.com/turlamai/layerly/issues) with a minimal reproducible scenario, OS/toolchain, and non-confidential sample models. See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidance.
 
 ## License
 
-[AGPL-3.0](LICENSE). Layerly is an independent implementation; it does
-not contain code from noncommercially-licensed projects.
+[AGPL-3.0](LICENSE). No code from noncommercially licensed projects is included. The [family delivery policy](https://github.com/turlamai/turlamai.github.io/blob/master/PORTFOLIO.md) does not change existing license rights.
