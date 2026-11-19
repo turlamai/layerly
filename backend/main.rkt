@@ -209,6 +209,14 @@
    (purchases-arrive [id string?])
    (or (purchase-arrived! id) (hasheq))]
 
+  ;; files (models / photos archived as-is; no real slicing in v1)
+  [(POST "api/files/save-model")
+   (files-save-model [project-id string?] [filename string?] [data-b64 string?])
+   (hasheq 'path (save-model-file! project-id filename (base64-decode data-b64)))]
+  [(POST "api/files/save-photo")
+   (files-save-photo [project-id string?] [filename string?] [data-b64 string?])
+   (hasheq 'path (save-photo-file! project-id filename (base64-decode data-b64)))]
+
   ;; demo seed — first-run sample workbench, refuses to merge into data
   [(POST "api/demo/seed")
    (demo-seed)
@@ -229,8 +237,9 @@
    ;; "demo" kind registers the synthetic fixture printer.
    (define kind* (if (string=? kind "demo") "fixture" kind))
    (define d (create-device! name model host serial access-code kind*))
-   (manager-connect! (hash-ref d 'id))
-   (hasheq 'device d 'snapshot (manager-snapshot))]
+   (define snap (manager-connect! (hash-ref d 'id)))
+   (void (settings-set! "last-device" (hash-ref d 'id)))
+   (hasheq 'device d 'snapshot snap)]
   [(POST "api/device/update")
    (device-update [id string?] [patch hash?])
    (update-device! id (jsexpr-args patch))]
@@ -240,7 +249,9 @@
    (hasheq 'ok #t)]
   [(POST "api/device/connect")
    (device-connect [id string?])
-   (manager-connect! id)]
+   (define snap (manager-connect! id))
+   (void (settings-set! "last-device" id))
+   snap]
   [(POST "api/device/disconnect")
    (device-disconnect)
    (void (manager-disconnect!))

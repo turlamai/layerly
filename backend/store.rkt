@@ -373,7 +373,7 @@
 
 (define (list-versions project-id)
   (for/list ([row (in-list (select "SELECT * FROM versions WHERE project_id = ?
-                                    ORDER BY created_at DESC" (list project-id)))])
+                                    ORDER BY created_at DESC, rowid DESC" (list project-id)))])
     (row->version row)))
 
 (define (create-version! project-id label note model-file material-name)
@@ -1030,7 +1030,10 @@
   (purchase-arrived! (hash-ref pur2 'id))
 
   ;; --- device ------------------------------------------------------------------
-  (define dev (create-device! "X1 Carbon" "X1 Carbon" "192.168.1.34" "" "" "fixture"))
+  ;; reuse an existing fixture device (first-run onboarding may have made
+  ;; one); the demo only registers a printer when the list is empty
+  (unless (> (length (list-devices)) 0)
+    (create-device! "X1 Carbon" "X1 Carbon" "192.168.1.34" "" "" "fixture"))
   ;; --- advisor conversation -------------------------------------------------------
   (define conv (create-conversation! "advisor" "" "耗材与回抽"))
   (add-message! (hash-ref conv 'id) "user"

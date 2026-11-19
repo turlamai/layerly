@@ -121,6 +121,14 @@
     },
     {
       "method": "POST",
+      "path": "/api/files/save-model"
+    },
+    {
+      "method": "POST",
+      "path": "/api/files/save-photo"
+    },
+    {
+      "method": "POST",
       "path": "/api/demo/seed"
     },
     {
@@ -556,6 +564,38 @@
           "internal"
         ],
         "name": "feedbackCreate",
+        "parameters": [],
+        "result": {
+          "kind": "scalar",
+          "name": "Value"
+        }
+      },
+      {
+        "errors": [
+          "invalid-args",
+          "capability-denied",
+          "token-required",
+          "timed-out",
+          "cancelled",
+          "internal"
+        ],
+        "name": "filesSaveModel",
+        "parameters": [],
+        "result": {
+          "kind": "scalar",
+          "name": "Value"
+        }
+      },
+      {
+        "errors": [
+          "invalid-args",
+          "capability-denied",
+          "token-required",
+          "timed-out",
+          "cancelled",
+          "internal"
+        ],
+        "name": "filesSavePhoto",
         "parameters": [],
         "result": {
           "kind": "scalar",

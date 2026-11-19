@@ -1,0 +1,122 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Release version consistency (offline)
+        run: bash scripts/check-release-version.sh
+
+      - name: Type-check
+        run: pnpm check
+
+      - name: Build frontend
+        run: pnpm build
+
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Bogdanp/setup-racket@v1.15
+        with:
+          version: stable
+          distribution: full
+
+      # Family pin: first tagged glaze release containing the verified
+      # main head this slice was built against.
+      - name: Install glaze
+        run: raco pkg install --auto --no-docs --skip-installed git+https://github.com/turlamai/glaze.git#v0.19.0
+
+      - name: Backend tests (store / device / ai / http smoke)
+        run: raco test backend/tests/
+        env:
+          LAYERLY_DATA_DIR: /tmp/layerly-test-data
+
+      - name: Application schema compatibility
+        run: raco glaze schema check --json
+        env:
+          LAYERLY_DATA_DIR: /tmp/layerly-test-data
+
+  package-smoke:
+    # Build the distributable on Linux to catch packaging breaks before
+    # a release tag; full three-platform packaging lives in release.yml.
+    needs: [frontend, backend]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install WebKitGTK and Xvfb (glaze Linux runtime)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev xvfb
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      - uses: Bogdanp/setup-racket@v1.15
+        with:
+          version: stable
+          distribution: full
+
+      - name: Install glaze
+        run: raco pkg install --auto --no-docs --skip-installed git+https://github.com/turlamai/glaze.git#v0.19.0
+
+      - name: Package (Linux)
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          raco glaze build \
+            --entry backend/main.rkt \
+            --name Layerly \
+            --version "$VERSION" \
+            --out dist
+
+      - name: HTTP adapter smoke (packaged binary serves API and frontend)
+        run: |
+          set -euo pipefail
+          export WEBKIT_DISABLE_DMABUF_RENDERER=1
+          data_dir="$(mktemp -d)"
+          export LAYERLY_TRANSPORT=http LAYERLY_DATA_DIR="$data_dir" GLAZE_API_TOKEN=smoke-token
+          BIN="$(find dist -type f \( -name 'Layerly' -o -name 'Layerly.*' \) ! -name '*.sha256' ! -name '*.AppImage' ! -name '*.deb' ! -name '*.rpm' | head -1)"
+          test -n "$BIN" || { echo "::error::packaged binary not found"; ls -R dist | head -40; exit 1; }
+          chmod +x "$BIN"
+          cd "$(dirname "$BIN")"
+          setsid xvfb-run -a "./$(basename "$BIN")" &
+          run_pid=$!
+          trap 'kill -9 -- "-$run_pid" 2>/dev/null || true' exit
+          # Probe every listening TCP port system-wide; the token-protected
+          # health endpoint decides which port is the app (family policy).
+          port=""
+          for _ in $(seq 1 15); do
+            candidate="$(ss -tlnp 2>/dev/null | grep -oP '127.0.0.1:\K[0-9]+' | sort -u | while read -r p; do
+              code="$(curl -s -o /dev/null -w '%{http_code}' -X POST -H 'X-Glaze-Token: smoke-token' "http://127.0.0.1:$p/api/health" || true)"
+              [ "$code" = "200" ] && echo "$p" && break
+            done || true)"
+            if [ -n "$candidate" ]; then port="$candidate"; break; fi
+            sleep 2
+          done
+          test -n "$port" || { echo "::error::no port answered the token health probe"; exit 1; }
+          echo "health OK on port $port"
+          curl -s -X POST -H 'X-Glaze-Token: smoke-token' "http://127.0.0.1:$port/api/app/info" | grep -q '"layerly"'

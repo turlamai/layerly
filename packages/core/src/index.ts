@@ -1,2 +1,33 @@
-export { api, hasBackend, apiPost } from './bridge.js';
-export type { AppInfo } from './bridge.js';
+export {
+  api,
+  hasBackend,
+  apiPost,
+  apiStream,
+  advisorChat,
+} from './bridge.js';
+export type {
+  AppInfo,
+  AppSettings,
+  AdvisorSettings,
+  AmsSlot,
+  ChatEvent,
+  ConfirmCard,
+  Conversation,
+  Device,
+  DeviceSnapshot,
+  Feedback,
+  JobSummary,
+  LibraryCounts,
+  LifecycleStatus,
+  Material,
+  Message,
+  PlanPart,
+  PrintJob,
+  Project,
+  ProjectDetail,
+  ProjectSummary,
+  Purchase,
+  ShoppingItem,
+  SlicePlan,
+  Version,
+} from './bridge.js';
