@@ -362,6 +362,7 @@
    #:public-dir frontend-dist
    #:api api
    #:transport transport
+   #:api-token (or (getenv "GLAZE_API_TOKEN") #t)
    #:title "Layerly"
    #:width 1280
    #:height 820
