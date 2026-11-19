@@ -1,7 +1,5 @@
 # Layerly
 
-**产品：**[产品主页](https://layerly.jrtx.site/) · **支持：**[问题与反馈](https://github.com/turlamai/layerly/issues) · [当前交付策略](https://github.com/turlamai/turlamai.github.io/blob/master/PORTFOLIO.zh-CN.md)
-
 **从想法到实物——本地优先的 3D 打印工作台。**
 
 [English](README.md) · **简体中文**
