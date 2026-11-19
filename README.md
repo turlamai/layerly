@@ -1,7 +1,5 @@
 # Layerly
 
-**Product:** [Website](https://layerly.jrtx.site/) · **Support:** [Issues & feedback](https://github.com/turlamai/layerly/issues) · [Development policy](https://github.com/turlamai/turlamai.github.io/blob/master/PORTFOLIO.md)
-
 **From idea to object — a local-first 3D printing workbench.**
 
 **English** · [简体中文](README.zh-CN.md)
