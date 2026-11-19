@@ -1,10 +1,10 @@
 # Layerly
 
+**Product:** [Website](https://jrtx.site/products/layerly/) · **Support:** [Issues & feedback](https://github.com/turlamai/layerly/issues) · [Development policy](https://github.com/turlamai/turlamai.github.io/blob/master/PORTFOLIO.md)
+
 **From idea to object — a local-first 3D printing workbench.**
 
 **English** · [简体中文](README.zh-CN.md)
-
-[Product homepage](https://jrtx.site/products/layerly/) · [Source](https://github.com/turlamai/layerly) · [Issues and feedback](https://github.com/turlamai/layerly/issues)
 
 > **Development preview — skeleton stage.** This is a design/architecture implementation, not a released consumer app. There is no verified installer, paid edition, checkout or trial expiry.
 
