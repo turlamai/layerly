@@ -1,10 +1,10 @@
 # Layerly
 
+**产品：**[产品主页](https://jrtx.site/products/layerly/) · **支持：**[问题与反馈](https://github.com/turlamai/layerly/issues) · [当前交付策略](https://github.com/turlamai/turlamai.github.io/blob/master/PORTFOLIO.zh-CN.md)
+
 **从想法到实物——本地优先的 3D 打印工作台。**
 
 [English](README.md) · **简体中文**
-
-[产品主页](https://jrtx.site/products/layerly/) · [源码](https://github.com/turlamai/layerly) · [问题与反馈](https://github.com/turlamai/layerly/issues)
 
 > **开发预览——工程骨架阶段。** 当前是设计与架构实现，不是已经正式发布的消费应用。没有经过验证的安装包、收费版、购买入口或试用到期限制。
 
