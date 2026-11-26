@@ -29,14 +29,14 @@
 - **气质**：工坊（workshop）——暖中性纸面底 + filament amber 主色（耗材的琥珀色）+ machine teal 辅助（设备的钢青色）。内容密集型工作台，**亮色为默认态**，暗色为完整成对主题。
 - **母题「层」**：3D 打印的本质是层积。层积条纹进度条（`--layer-stripe`）、层数徽标、卡片分层投影——全家族共用 `shared.css` 的 `.layerbar` 与 `.layers-bg`。
 - **字体**：系统栈（SF Pro / Segoe UI / PingFang SC / Microsoft YaHei）；一切尺寸、用量、耗时、克重用 `--mono` 等宽栈——数字是打印玩家的第一语言。
-- **图标**：内联 SVG，1.5px 描边、16px 网格、圆角端点、无填充（filled 仅用于选中态导航）。
+- **图标**：内联 SVG，1.5px 描边、16px 网格、圆角端点、无填充（filled 仅用于选中态导航）。主题切换用家族月亮/太阳图标（24 网格、16px 渲染、1.7 描边）。
 
 ## Tokens（语义名 → 用途；值见 shared.css）
 
 | 语义 | 用途 |
 |---|---|
 | `bg / surface / raised / line` | 页面底 / 卡片与面板 / 悬浮与嵌套面 / 描边 |
-| `ink / mute / faint` | 主文本 / 次文本 / 弱化（时间戳、占位） |
+| `ink / mute / faint` | 主文本 / 次文本（文字对比 ≥ 4.5:1）/ 弱化（装饰描边、离线点、占位图标；不承载文字） |
 | `accent / accent-soft` | 主色（amber）+ 其浅底；唯一品牌色，用于主动作、选中态、进行态 |
 | `teal / teal-soft` | 辅助色（设备/连接语义）；设备在线、连接成功 |
 | `ok / warn / err`（+ `*-soft`） | 语义状态：完成/成功、警告（材料不足、校验提示）、失败/错误 |
@@ -47,7 +47,7 @@
 
 ## 组件词汇（全家族唯一词汇，屏内禁止私有变体）
 
-`window`（titlebar + body + sidebar + main + topbar）· `nav-item` · `btn`（primary/secondary/danger/ghost × small）· `pill`（状态）· `chip`（耗材，色点+类型）· `project-card`（封面/状态/版本/进度）· `layerbar`（层积进度）· `metric`（数值瓦片，mono）· `ams-slot`（AMS 槽位）· `timeline`（设计版本）· `chat`（user/advisor 气泡 + composer + 确认卡）· `table`（历史/清单行）· `empty`（空态）· `input / search / select` · `toggle`（主题切换，右上角固定）· `confirm-card`（AI 动作确认卡：内容+影响+显式确认按钮）
+`window`（titlebar + body + sidebar + main + topbar）· `nav-item` · `btn`（primary/secondary/danger/ghost × small）· `pill`（状态）· `chip`（耗材，色点+类型）· `project-card`（封面/状态/版本/进度）· `layerbar`（层积进度）· `metric`（数值瓦片，mono）· `ams-slot`（AMS 槽位）· `timeline`（设计版本）· `chat`（user/advisor 气泡 + composer + 确认卡）· `table`（历史/清单行）· `empty`（空态）· `input / search / select` · `toggle`（主题切换，右下角固定的安静图标按钮）· `confirm-card`（AI 动作确认卡：内容+影响+显式确认按钮）
 
 ## 不变式（违反即打回）
 
@@ -101,3 +101,23 @@
 ## Prototype source checkpoint — 2026-11-15
 
 `index.html` opens the primary prototype directly. Screen-directory launchers have been removed. All local scripts, styles and referenced assets needed by this checkpoint are versioned under this directory; OpenDesign metadata is excluded. This is an editable prototype checkpoint, not a claim that the native product or external services implement these interactions.
+
+
+## 2026-11-26 · 对齐家族设计基线 `2026-11-20-minimal-family`
+
+起点 `51314f3`。只动 `design/`；信息架构、强调色、示例数据、文案含义与产品行为未变。数字取自 1280×800 双主题渲染报告（前 → 后，20 张合计）：small 238 → 0，low 422 → 87，overflowX 0 → 0，nameless 0 → 0，err/fail 0 → 0。
+
+| 检查 | 结果 | 证据 / 限度 |
+|---|---|---|
+| R1 主题切换 | 通过 | `.toggle` 改为 28px 安静图标按钮（无底无边、与 `.iconbtn` 同规格），图标=当前主题，`aria-label`/`title`=`切换浅色主题`/`切换深色主题` 随主题更新；10 屏 `data-theme-toggle`，`prototype-runtime.js` |
+| R2 12px 下限 | 通过 | 源码 <12px 声明 22 → 0，无登记例外；`shared.css` 与 devices/advisor/model-viewer/print-prep/onboarding 内联样式；`.btn.small` 24 → 28px、`.pill` 20 → 22px、body 行高 1.4 |
+| R3 减弱动效 / 焦点 | 通过 | `prefers-reduced-motion` 与全局 `:focus-visible`（2px accent，偏移 2px） |
+| R4 原型完整性 | 通过 | 零外部依赖、本地引用无悬空；`index.html` 保持直达主界面（2026-11-15 的决定不变；家族的导航页规则不覆盖仓内契约）；暗色加 `color-scheme: dark` |
+| R5 可访问名称 | 通过 | 106 处装饰 SVG `aria-hidden="true"`；图标按钮有名称 |
+| R6 版式缺陷 | 通过 | 页高 820 → 800（body 上下边距随视口收缩）；`.ams-slot.empty` 撞上 `.empty` 空态规则（空槽高 142px）已修；标题栏设置图标不可见已修；`.num` 不再断行（print-prep「644 g」）；model-viewer「Text-to-CAD」不再断词 |
+| R7 契约同步 | 通过 | token 表与组件词汇已更新；本节 |
+| R8 仓库门禁 | 通过 | 无门禁读取 `design/`（CI 仅前端/后端/打包）；`scripts/check-release-version.sh` 通过 |
+
+token 变更：亮色 `--mute` `#8b8477` → `#6f695c`（原值对 surface 3.71:1、对 raised 3.08:1；新值 5.45 / 4.54）。原用 `--faint` 的文字（侧栏页脚、气泡来源、composer 提示、设备摄像头说明、顾问记忆说明、派发脚注等）改用 `--mute`；`--faint` 只留给装饰与禁用图形。`.badge` 10 → 12px 且字重 700 → 600，保持低于 13px/700 的卡片标题。原生 range/checkbox 用 `accent-color` 跟随主题。
+
+未结：亮色状态 pill 与强调色对比仍低于 4.5:1（printing 3.38、slicing 3.44、done 4.25、failed 4.30、design/标签 4.38、导航选中与确认卡标题 4.43、主按钮白字 4.03），需强调色/语义色决定，未改。`apps/desktop/src/styles.css` 手工镜像本文件 token，需同步 `--mute`、`.ams-slot.empty`、`.toggle`、`.iconbtn svg`、`.btn.small`、`.pill`、`.badge` 与 12px 下限。
