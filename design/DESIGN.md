@@ -93,14 +93,14 @@
 
 入口为 prototype/dashboard.html。侧栏连接作品、设备、材料、历史、顾问。新建作品先呈现无模型空态，禁止直接打印；已有示例作品经过准备与确认后仅加入本地演示队列。模型层数与视角为 SVG 示意交互，不执行真实切片。
 
-根级 index.html 为原型导航页（2026-11-26 起，见文末）；页面切换直接到目标界面。原型运行脚本 prototype-runtime.js / prototype-flow.js 只表达浏览器内的交互合同；正式产品业务仍由既定引擎实现。真实设备、模型和发布服务均未连接。凭据演示不保存密钥，破坏性示例与派发保留确认和取消。
+根级 index.html 只负责首次进入主界面；页面切换直接到目标界面，不再保留页面目录。原型运行脚本 prototype-runtime.js / prototype-flow.js 只表达浏览器内的交互合同；正式产品业务仍由既定引擎实现。真实设备、模型和发布服务均未连接。凭据演示不保存密钥，破坏性示例与派发保留确认和取消。
 
 这些是可评审的增量改动，未替用户勾选满意度、HIG 最终验收或设计冻结条件。
 
 
 ## Prototype source checkpoint — 2026-11-15
 
-`index.html` opened the primary prototype directly at this checkpoint (since 2026-11-26 it is the navigation page again; see the last section). All local scripts, styles and referenced assets needed by this checkpoint are versioned under this directory; OpenDesign metadata is excluded. This is an editable prototype checkpoint, not a claim that the native product or external services implement these interactions.
+`index.html` opens the primary prototype directly. Screen-directory launchers have been removed. All local scripts, styles and referenced assets needed by this checkpoint are versioned under this directory; OpenDesign metadata is excluded. This is an editable prototype checkpoint, not a claim that the native product or external services implement these interactions.
 
 
 ## 2026-11-26 · 对齐家族设计基线 `2026-11-20-minimal-family`
@@ -112,7 +112,7 @@
 | R1 主题切换 | 通过 | `.toggle` 改为 28px 安静图标按钮（无底无边、与 `.iconbtn` 同规格），图标=当前主题，`aria-label`/`title`=`切换浅色主题`/`切换深色主题` 随主题更新；10 屏 `data-theme-toggle`，`prototype-runtime.js` |
 | R2 12px 下限 | 通过 | 源码 <12px 声明 22 → 0，无登记例外；`shared.css` 与 devices/advisor/model-viewer/print-prep/onboarding 内联样式；`.btn.small` 24 → 28px、`.pill` 20 → 22px、body 行高 1.4 |
 | R3 减弱动效 / 焦点 | 通过 | `prefers-reduced-motion` 与全局 `:focus-visible`（2px accent，偏移 2px） |
-| R4 原型完整性 | 通过 | 零外部依赖、本地引用无悬空；`index.html` 改回导航页（按 `<title>` 列 10 屏 + DESIGN.md），与「关键屏清单 + index 导航页」的 Exit 条件一致，取代 2026-11-15 的直接进入主界面；暗色加 `color-scheme: dark` |
+| R4 原型完整性 | 通过 | 零外部依赖、本地引用无悬空；`index.html` 保持直达主界面（2026-11-15 的决定不变；家族的导航页规则不覆盖仓内契约）；暗色加 `color-scheme: dark` |
 | R5 可访问名称 | 通过 | 106 处装饰 SVG `aria-hidden="true"`；图标按钮有名称 |
 | R6 版式缺陷 | 通过 | 页高 820 → 800（body 上下边距随视口收缩）；`.ams-slot.empty` 撞上 `.empty` 空态规则（空槽高 142px）已修；标题栏设置图标不可见已修；`.num` 不再断行（print-prep「644 g」）；model-viewer「Text-to-CAD」不再断词 |
 | R7 契约同步 | 通过 | token 表与组件词汇已更新；本节 |
