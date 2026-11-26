@@ -120,4 +120,26 @@
 
 token 变更：亮色 `--mute` `#8b8477` → `#6f695c`（原值对 surface 3.71:1、对 raised 3.08:1；新值 5.45 / 4.54）。原用 `--faint` 的文字（侧栏页脚、气泡来源、composer 提示、设备摄像头说明、顾问记忆说明、派发脚注等）改用 `--mute`；`--faint` 只留给装饰与禁用图形。`.badge` 10 → 12px 且字重 700 → 600，保持低于 13px/700 的卡片标题。原生 range/checkbox 用 `accent-color` 跟随主题。
 
-未结：亮色状态 pill 与强调色对比仍低于 4.5:1（printing 3.38、slicing 3.44、done 4.25、failed 4.30、design/标签 4.38、导航选中与确认卡标题 4.43、主按钮白字 4.03），需强调色/语义色决定，未改。`apps/desktop/src/styles.css` 手工镜像本文件 token，需同步 `--mute`、`.ams-slot.empty`、`.toggle`、`.iconbtn svg`、`.btn.small`、`.pill`、`.badge` 与 12px 下限。
+未结：~~亮色状态 pill 与强调色对比仍低于 4.5:1（printing 3.38、slicing 3.44、done 4.25、failed 4.30、design/标签 4.38、导航选中与确认卡标题 4.43、主按钮白字 4.03），需强调色/语义色决定，未改~~（已落地，见下节）。`apps/desktop/src/styles.css` 手工镜像本文件 token，需同步 `--mute`、`.ams-slot.empty`、`.toggle`、`.iconbtn svg`、`.btn.small`、`.pill`、`.badge` 与 12px 下限。
+
+## 2026-11-26 · 对比度落地（`2026-11-20-minimal-family`）
+
+起点 `61375e3`。只动 `design/`；按家族规范 §4「普通文字 ≥ 4.5:1」把强调色与语义色落到达标值，色相不变。上节「未结」里那组数字由 owner 授权处理：亮色加深，暗色本已达标、未改。
+
+| token | 亮色 | 取值依据 |
+|---|---|---|
+| `--accent` | `#c2661d` → `#9c5217` | 最浅落点是 `--err-soft` 上的 accent 文字（原 3.24）；对白底的主按钮同时从 4.03 升到 5.5 以上 |
+| `--accent-hover` | `#a8550f` → `#954c0d` | 相对 `--accent` 再深一档 |
+| `--teal` | `#1f7a6d` → `#1d7468` | `--teal-soft` 上的来源标签与 Advisor 标签（原 4.38） |
+| `--ok` | `#2e7d4f` → `#2b764a` | `--ok-soft` 上的 Done pill（原 4.25） |
+| `--warn` | `#9a7a20` → `#7f641a` | `--warn-soft` 上的 Slicing pill 与受潮徽标（原 3.44） |
+| `--err` | `#b04a4a` → `#a94747` | `--err-soft` 上的 Failed pill（原 4.30） |
+
+- 导航选中项与确认卡标题原先借用 `--accent-hover` 作文字色，改用 `--accent`；`--accent-hover` 回到只作悬停底色。
+- 顾问 composer（`advisor.html`）与小组 composer（`project.html`）的 `textarea` 原先没有可访问名称（内容与 placeholder 不算名称），补 `aria-label`。
+
+验证：无头 Edge 1280×800，10 屏 × 亮/暗，脚本测量：低于 4.5:1 的文字对 96 / 0 → 0 / 0；sub-12px 0；横向溢出 0；无可访问名称的控件 2 → 0；脚本错误 0。测量脚本已修正半透明背景的合成顺序（文字压在弱底上时按弱底算），上节的 87 与本节的 96 是同一份数据在两种算法下的读数。
+
+产品侧同步（漂移，未改）：`apps/desktop/src/styles.css` 手工镜像本文件 token，需随本次同步 `--accent` `--accent-hover` `--teal` `--ok` `--warn` `--err`。
+
+仍记为待办、未改：圆角 `--radius-card` 10 / `--radius-ctl` 8（家族 4 / 8 / 12）；`.nav-item` `.btn.primary` 等处字重 600 以外还有 700（家族 400 / 500 / 600）；非文字对比（图标、控件边界 3:1）未做系统测量。
