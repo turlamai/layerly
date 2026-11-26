@@ -19,5 +19,5 @@ compiled/
 # macOS
 .DS_Store
 
-# Prototype nav page lives only in the OpenDesign project (per family flow)
+# Prototype nav page is a local review entry only, never committed (per family flow)
 design/prototype/index.html
