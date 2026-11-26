@@ -23,7 +23,7 @@
   --radius-card: 10px;
   --radius-ctl: 8px;
   --layer-stripe: repeating-linear-gradient(-45deg, currentColor 0 3px, transparent 3px 7px);
-  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Noto Sans Mono CJK SC", "Noto Sans CJK SC", "Microsoft YaHei", monospace;
 }
 .dark {
   --bg: #1a1713;
@@ -52,7 +52,7 @@ body {
      window mock fits without a page scroll (e.g. 30px at 1280x800). */
   min-height: 100vh; display: grid; place-items: center; padding: min(40px, calc((100vh - 740px) / 2)) 24px;
   background: radial-gradient(1200px 800px at 20% 0%, #ece7dd, #e3ded2 60%, #d9d3c4);
-  font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   -webkit-font-smoothing: antialiased; color: var(--ink); line-height: 1.4;
 }
 body.dark {
@@ -340,3 +340,14 @@ input[type="range"], input[type="checkbox"] { accent-color: var(--accent); }
     scroll-behavior: auto !important;
   }
 }
+
+/* Dark accent is lighter, so the mark letter needs dark ink (was 2.13:1). */
+.dark .brand .mark { color: #1c1410; }
+
+/* ---- temperament profile pass ---- */
+/* typography baseline (family standard 2026-11-26-temperament-profiles): CJK/Latin spacing and kinsoku come from the rendering layer,
+   never from typed spaces (§4, §10). Values stay in the token block above. */
+body { text-autospace: normal; line-break: strict; }
+::selection { background: var(--accent-soft); color: var(--ink); }
+/* Paired neutral scrollbar for both themes; thin and non-distracting. */
+html { scrollbar-color: var(--line) transparent; }
