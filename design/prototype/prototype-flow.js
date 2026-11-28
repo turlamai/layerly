@@ -22,9 +22,13 @@
  $$('.search').filter(x=>!x.matches('input')).forEach(el=>{el.innerHTML='<input aria-label="搜索作品" placeholder="搜索作品…" style="border:0;background:transparent;color:inherit;font:inherit;width:100%">';$('input',el).addEventListener('input',e=>{const cards=$$('.project-card');cards.forEach(c=>c.hidden=!text(c).toLowerCase().includes(e.target.value.toLowerCase()));let empty=$('#project-empty');if(!empty){empty=document.createElement('p');empty.id='project-empty';empty.className='proto-result';empty.textContent='没有匹配的作品';$('.content')?.append(empty)}empty.hidden=cards.some(c=>!c.hidden)})});
  match('button',/^编辑$/,()=>modal('编辑示例作品','修改保存在当前浏览器。',[{label:'名称',name:'name',value:read('projectName','相机快装板 V4'),required:true}],d=>{save('projectName',d.name);$('h1').textContent=d.name},'保存'));
  if(file==='project.html'&&read('projectName',null)&&!location.search)$('h1').textContent=read('projectName');
- match('button',/^换方案$/,()=>modal('切片方案','选择用于演示的方案，不运行真实切片。',[{label:'方案',name:'plan',options:['平衡 · 0.20 mm','精细 · 0.12 mm','快速 · 0.28 mm']}],d=>{save('plan',d.plan);status('已选用 '+d.plan)},'使用'));
- match('button',/^确认并派发/,()=>modal('确认模拟打印','相机快装板 V4 · 第 4 件\n设备：X1 Carbon\n材料：PETG 黑 / AMS 1\n方案：'+read('plan','平衡 · 0.20 mm')+'\n此操作仅增加本地演示记录，不向设备发送文件。',[],()=>{save('print',{state:'queued',at:new Date().toISOString()});go('devices.html?queued=1')},'确认加入演示队列'));
- if(file==='devices.html'&&read('print',null)){const notice=document.createElement('div');notice.className='card pad';notice.setAttribute('role','status');notice.textContent='本地演示队列：相机快装板 V4 · 第 4 件待打印，未向真实设备派发。';$('.content')?.prepend(notice)}
+ const plans=['平衡 · 0.20 mm','精细 · 0.12 mm','快速 · 0.28 mm'];
+ const currentPlan=()=>{const value=read('plan',plans[0]);return plans.includes(value)?value:plans[0]};
+ function showPlan(){if(file!=='print-prep.html')return;const el=$('#selected-plan');if(el)el.textContent=currentPlan();const metric=$('.metric').find(x=>text($('.k',x))==='层高');if(metric){const v=$('.v',metric);if(v)v.textContent=currentPlan().split(' · ')[1]}}
+ showPlan();
+ match('button',/^换方案$/,()=>modal('切片方案','选择用于演示的方案，不运行真实切片。',[{label:'方案',name:'plan',options:plans,value:currentPlan()}],d=>{save('plan',d.plan);showPlan();status('已选用 '+d.plan)},'使用'));
+ match('button',/^确认并派发/,()=>modal('确认模拟打印','相机快装板 V4 · 第 4 件\n设备：X1 Carbon\n材料：PETG 黑 / AMS 1\n方案：'+currentPlan()+'\n此操作仅增加本地演示记录，不向设备发送文件。',[],()=>{save('print',{state:'queued',plan:currentPlan(),at:new Date().toISOString()});go('devices.html?queued=1')},'确认加入演示队列'));
+ if(file==='devices.html'&&read('print',null)){const notice=document.createElement('div');notice.className='card pad';notice.setAttribute('role','status');notice.textContent='本地演示队列：相机快装板 V4 · 第 4 件待打印 · '+(read('print',{}).plan||'未记录方案')+'，未向真实设备派发。';$('.content')?.prepend(notice)}
  match('button',/^暂停$|^继续$/,b=>modal(text(b)+'演示任务？','仅改变当前界面的演示状态，不控制打印机。',[],()=>{b.textContent=text(b)==='暂停'?'继续':'暂停';status('演示任务状态已更新')},'确认'));
  match('button',/^添加设备$/,()=>modal('添加演示设备','不搜索局域网，也不保存真实访问码。',[{label:'设备名称',name:'name',required:true},{label:'演示 IP',name:'ip',value:'192.168.1.100',required:true}],d=>{save('device',{name:d.name,ip:d.ip});const card=document.createElement('div');card.className='card pad';card.textContent=d.name+' · '+d.ip+' · 演示设备（未连接）';$('.content')?.prepend(card)},'添加'));
  match('button',/^盘点 AMS$/,()=>modal('AMS 示例盘点','槽位 1：PETG 黑 · 820 g\n槽位 2：PLA 白 · 450 g\n数据为界面样例，不来自实时设备。'));
@@ -38,7 +42,7 @@
  match('button',/^新对话$/,()=>modal('开始新对话？','当前页面的演示对话将清空。',[],()=>{const c=$('.chat-scroll');if(c)c.replaceChildren()},'开始'));
  match('button',/^@ 引用/,b=>modal('引用作品','给消息附加当前作品名称。',[{label:'作品',name:'project',options:['相机快装板 V4',...projects.map(p=>p.name)]}],d=>{const input=$('textarea',b.closest('.composer'));if(input)input.value+=' @'+d.project},'引用'));
  match('button',/^导出 CSV$/,()=>{const rows=$$('.table .trow').map(r=>[...r.children].map(c=>'"'+text(c).replace(/"/g,'""')+'"').join(','));download('layerly-sample-history.csv','\uFEFF'+rows.join('\r\n'),'text/csv')});
- match('button',/^导出打印包$/,()=>download('layerly-sample-print-package.json',JSON.stringify({prototype:true,project:'相机快装板 V4',plan:read('plan','平衡 · 0.20 mm'),modelIncluded:false},null,2)));
+ match('button',/^导出打印包$/,()=>download('layerly-sample-print-package.json',JSON.stringify({prototype:true,project:'相机快装板 V4',plan:currentPlan(),modelIncluded:false},null,2)));
  match('button',/^详情$/,b=>modal('打印记录详情',text(b.closest('.trow'))+'\n示例记录，不来自设备。'));
  match('button',/^查看全部/,()=>status('当前展示此原型包含的全部历史样例'));
  if(file==='model-viewer.html'){
@@ -47,7 +51,7 @@
    const render=()=>{slider.value=layer;label.textContent=`L ${layer} / 184`;model.style.transform=`rotate(${angle}deg)`;model.style.clipPath=`inset(${100-layer/184*100}% 0 0 0)`};slider.oninput=()=>{layer=Number(slider.value);render()};
    $$('button[title]').forEach(b=>{if(b.title==='线框 / 实体')link(b,()=>{model.style.opacity=model.style.opacity==='0.45'?'1':'0.45';b.setAttribute('aria-pressed',model.style.opacity==='0.45')});if(b.title==='剖层')link(b,()=>{layer=layer===184?92:184;render()});if(b.title==='复位视角')link(b,()=>{angle=0;layer=184;render()})});
    match('button',/^播放层积$|^暂停层积$/,b=>{if(timer){clearInterval(timer);timer=null;b.textContent='播放层积'}else{if(layer>=184)layer=1;b.textContent='暂停层积';timer=setInterval(()=>{layer++;render();if(layer>=184){clearInterval(timer);timer=null;b.textContent='播放层积'}},60)}});
-   model.style.cursor='grab';model.style.touchAction='none';let x;model.addEventListener('pointerdown',e=>{x=e.clientX;model.setPointerCapture(e.pointerId)});model.addEventListener('pointermove',e=>{if(x===undefined)return;angle+=e.clientX-x;x=e.clientX;render()});model.addEventListener('pointerup',()=>x=undefined);
+   model.style.cursor='grab';model.style.touchAction='none';let x;model.addEventListener('pointerdown',e=>{x=e.clientX;model.setPointerCapture(e.pointerId)});model.addEventListener('pointermove',e=>{if(x===undefined)return;angle+=e.clientX-x;x=e.clientX;render()});['pointerup','pointercancel','lostpointercapture'].forEach(type=>model.addEventListener(type,()=>x=undefined));window.addEventListener('pagehide',()=>clearInterval(timer));
  }
  match('button',/^绑定访问码$/,()=>modal('绑定演示设备','请勿输入真实设备访问码。',[{label:'演示访问码（demo-code）',name:'code',required:true}],d=>{if(d.code!=='demo-code'){status('请输入 demo-code');return false}status('演示绑定完成 · 未连接设备')},'绑定'));
  match('button',/^重新搜索$/,()=>status('已刷新演示设备列表 · 未扫描网络'));
